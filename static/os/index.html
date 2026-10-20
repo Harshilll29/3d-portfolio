@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Harshil Joshi - Portfolio</title>
+  <link rel="stylesheet" href="https://use.typekit.net/llo2eru.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <style>
+    :root {
+      --button-highlight: #ffffff;
+      --button-face: #747474;
+      --button-shadow: #808080;
+      --window-frame: #2b2b2b;
+      --surface: #c0c0c0;
+      --surface-hover: #e9e9e9;
+      --border-field: inset -1px -1px var(--button-highlight),
+        inset 1px 1px var(--button-shadow), inset -2px -2px var(--button-face),
+        inset 2px 2px var(--window-frame);
+      --border-raised-outer: inset -1px -1px var(--window-frame),
+        inset 1px 1px var(--button-highlight);
+      --border-raised-inner: inset -2px -2px var(--button-shadow),
+        inset 2px 2px var(--button-face);
+      --border-sunken-outer: inset 1px 1px var(--window-frame),
+        inset -1px -1px var(--button-highlight);
+      --border-sunken-inner: inset 2px 2px var(--button-shadow),
+        inset -2px -2px var(--button-face);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background-color: #008080; /* Classic Retro Teal */
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    /* Desktop View */
+    #desktop {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 34px;
+      overflow: hidden;
+    }
+
+    /* Desktop Shortcuts */
+    .desktop-shortcuts {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      z-index: 2;
+    }
+
+    .shortcut {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 76px;
+      padding: 4px;
+      cursor: pointer;
+      text-align: center;
+      color: white;
+      text-shadow: 1px 1px 2px #000;
+      border: 1px dotted transparent;
+    }
+
+    .shortcut:hover, .shortcut.active {
+      background: rgba(0, 0, 128, 0.45);
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .shortcut svg {
+      width: 36px;
+      height: 36px;
+      margin-bottom: 4px;
+      filter: drop-shadow(1px 2px 2px rgba(0,0,0,0.5));
+    }
+
+    .shortcut span {
+      font-size: 11px;
+      line-height: 1.2;
+    }
+
+    /* Main Window Container */
+    #window-container {
+      position: absolute;
+      top: 16px;
+      left: 96px;
+      right: 20px;
+      bottom: 16px;
+      background: var(--surface);
+      box-shadow: var(--border-raised-outer), var(--border-raised-inner);
+      display: flex;
+      flex-direction: column;
+      z-index: 10;
+    }
+
+    /* Title Bar */
+    .title-bar {
+      height: 28px;
+      background: linear-gradient(90deg, #000080, #1084d0);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 6px;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .title-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .title-left svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .title-buttons {
+      display: flex;
+      gap: 3px;
+    }
+
+    .win-btn {
+      width: 18px;
+      height: 16px;
+      background: var(--surface);
+      box-shadow: var(--border-raised-outer), var(--border-raised-inner);
+      border: none;
+      font-size: 10px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #000;
+      line-height: 1;
+    }
+
+    .win-btn:active {
+      box-shadow: var(--border-sunken-outer), var(--border-sunken-inner);
+      padding-top: 1px;
+      padding-left: 1px;
+    }
+
+    /* Inner Window Layout */
+    .window-content {
+      flex: 1;
+      display: flex;
+      background: #ffffff;
+      margin: 3px;
+      box-shadow: var(--border-sunken-outer), var(--border-sunken-inner);
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Vertical Navbar */
+    .vertical-navbar {
+      width: 250px;
+      height: 100%;
+      background: #ffffff;
+      border-right: 2px solid #808080;
+      display: flex;
+      flex-direction: column;
+      padding: 30px 24px;
+      box-sizing: border-box;
+      flex-shrink: 0;
+    }
+
+    .navbar-header {
+      margin-bottom: 34px;
+    }
+
+    /* Name in ONE single line as requested */
+    .navbar-header h1 {
+      font-family: 'Times New Roman', Georgia, serif;
+      font-size: 26px;
+      line-height: 1.2;
+      color: #000;
+      margin: 0;
+      white-space: nowrap;
+    }
+
+    .navbar-subtitle {
+      font-family: 'Times New Roman', serif;
+      font-size: 14px;
+      color: #555;
+      margin-top: 6px;
+      font-style: italic;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .nav-link {
+      font-family: 'Times New Roman', serif;
+      font-size: 16px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: color 0.1s;
+    }
+
+    .nav-link:hover {
+      color: #000080;
+    }
+
+    .nav-link.active {
+      color: #000080;
+      text-decoration: underline;
+    }
+
+    .nav-link.active::before {
+      content: "►";
+      font-size: 11px;
+      margin-right: 6px;
+    }
+
+    /* Page Content Area */
+    .site-page-container {
+      flex: 1;
+      height: 100%;
+      overflow-y: auto;
+      padding: 32px 40px;
+      background: #ffffff;
+      user-select: text;
+      -webkit-user-select: text;
+    }
+
+    /* Typography */
+    h1 {
+      font-family: 'Times New Roman', Georgia, serif;
+      font-size: 44px;
+      line-height: 1.1;
+      color: #000;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-family: 'Times New Roman', Georgia, serif;
+      font-size: 24px;
+      color: #333;
+      margin-bottom: 12px;
+    }
+
+    h3 {
+      font-family: 'Times New Roman', Georgia, serif;
+      font-size: 20px;
+      color: #000;
+      margin-bottom: 8px;
+    }
+
+    h4 {
+      font-family: 'Times New Roman', Georgia, serif;
+      font-size: 15px;
+      color: #444;
+    }
+
+    p {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 16px;
+      line-height: 1.6;
+      color: #111;
+      text-align: justify;
+    }
+
+    a {
+      color: #0000cc;
+      text-decoration: underline;
+    }
+
+    .site-button {
+      background: var(--surface);
+      box-shadow: var(--border-raised-outer), var(--border-raised-inner);
+      border: none;
+      color: black;
+      font-size: 14px;
+      font-family: 'Times New Roman', serif;
+      font-weight: bold;
+      padding: 6px 14px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .site-button:hover {
+      background: var(--surface-hover);
+    }
+
+    .site-button:active {
+      box-shadow: var(--border-sunken-outer), var(--border-sunken-inner);
+    }
+
+    .site-button.primary {
+      background: #000080;
+      color: #ffffff;
+      box-shadow: var(--border-raised-outer), var(--border-raised-inner);
+    }
+
+    .site-button.primary:hover {
+      background: #1084d0;
+    }
+
+    /* Photo: Clean frame, NO "Figure 1" text, trimmed slightly from bottom */
+    .captioned-image-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin: 18px 0;
+    }
+
+    .captioned-image {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: var(--border-raised-outer), var(--border-raised-inner);
+      padding: 6px;
+      background: var(--surface);
+      max-width: 320px;
+    }
+
+    .captioned-image img {
+      width: 100%;
+      height: 310px;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      box-shadow: var(--border-sunken-outer), var(--border-sunken-inner);
+    }
+
+    /* Home Page Cards & Highlights Grid (Never Blank!) */
+    .home-hero {
+      text-align: center;
+      margin-top: 20px;
+      margin-bottom: 28px;
+    }
+
+    .home-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .home-card {
+      box-shadow: var(--border-raised-outer), var(--border-raised-inner);
+      padding: 16px 18px;
+      background: #fafafa;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .home-card:hover {
+      background: var(--surface-hover);
+    }
+
+    .home-card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .home-card-header h3 {
+      font-size: 18px;
+      color: #000080;
+      margin: 0;
+    }
+
+    .home-card p {
+      font-size: 14px;
+      line-height: 1.5;
+      color: #444;
+      margin-bottom: 12px;
+      text-align: left;
+    }
+
+    /* Projects Cards */
+    .project-card {
+      box-shadow: var(--border-raised-outer), var(--border-raised-inner);
+      padding: 18px 20px;
+      margin-bottom: 24px;
+      background: #fafafa;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      cursor: pointer;
+      transition: background 0.1s;
+    }
+
+    .project-card:hover {
+      background: #f0f4f8;
+    }
+
+    .project-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .project-card-header h2 {
+      font-size: 22px;
+      color: #000080;
+      margin: 0;
+    }
+
+    .project-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .project-card-image {
+      width: 100%;
+      max-height: 230px;
+      object-fit: cover;
+      box-shadow: var(--border-sunken-outer), var(--border-sunken-inner);
+      border: 1px solid #777;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .tag-badge {
+      display: inline-block;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      background: #e2e8f0;
+      color: #2d3748;
+      border: 1px solid #cbd5e0;
+      border-radius: 2px;
+    }
+
+    .tag-badge.primary {
+      background: #ebf8ff;
+      color: #2b6cb0;
+      border-color: #bee3f8;
+    }
+
+    /* Skills Section (Dedicated Page) */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+      margin-top: 14px;
+    }
+
+    .skill-card {
+      box-shadow: var(--border-raised-outer), var(--border-raised-inner);
+      padding: 16px 18px;
+      background: #fafafa;
+    }
+
+    .skill-card h3 {
+      font-size: 18px;
+      color: #000080;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #cbd5e0;
+      padding-bottom: 4px;
+    }
+
+    .skill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    /* Experience Headers */
+    .exp-item {
+      margin-bottom: 22px;
+    }
+
+    .exp-header {
+      margin-bottom: 8px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid #808080;
+    }
+
+    .exp-row-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .exp-row-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-top: 4px;
+    }
+
+    ul.exp-bullets {
+      margin-left: 24px;
+      margin-top: 8px;
+    }
+
+    ul.exp-bullets li {
+      margin-bottom: 6px;
+    }
+
+    /* Contact & Resume Card in Contact Section */
+    .resume-contact-card {
+      box-shadow: var(--border-raised-outer), var(--border-raised-inner);
+      padding: 16px 20px;
+      background: #f7fafc;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .contact-form {
+      max-width: 520px;
+      margin-top: 16px;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-group label {
+      display: block;
+      font-family: 'Times New Roman', serif;
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 6px 10px;
+      box-shadow: var(--border-field);
+      border: none;
+      font-family: 'Times New Roman', serif;
+      font-size: 15px;
+      background: #ffffff;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      height: 110px;
+      resize: vertical;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      background: #fbffc4;
+    }
+
+    .social-row {
+      display: flex;
+      gap: 14px;
+      margin-top: 16px;
+      margin-bottom: 20px;
+    }
+
+    .social-box {
+      flex: 1;
+      box-shadow: var(--border-raised-outer), var(--border-raised-inner);
+      padding: 10px;
+      background: var(--surface);
+      text-align: center;
+      text-decoration: none;
+      color: #000;
+      font-family: 'Times New Roman', serif;
+      font-weight: bold;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .social-box:hover {
+      background: var(--surface-hover);
+    }
+
+    .social-box svg {
+      width: 22px;
+      height: 22px;
+      fill: #000080;
+    }
+
+    /* Pages Visibility */
+    .page-section {
+      display: none;
+    }
+
+    .page-section.active {
+      display: block;
+      animation: fadeIn 0.15s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Taskbar */
+    #taskbar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 34px;
+      background: var(--surface);
+      box-shadow: inset 0 1px #ffffff, inset 0 -1px #808080;
+      display: flex;
+      align-items: center;
+      padding: 2px 4px;
+      gap: 6px;
+      z-index: 100;
+    }
+
+    #start-btn {
+      height: 26px;
+      padding: 0 10px;
+      background: var(--surface);
+      box-shadow: var(--border-raised-outer), var(--border-raised-inner);
+      border: none;
+      font-size: 12px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    #start-btn:active, #start-btn.active {
+      box-shadow: var(--border-sunken-outer), var(--border-sunken-inner);
+      background: #b0b0b0;
+    }
+
+    #start-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .taskbar-items {
+      flex: 1;
+      display: flex;
+      gap: 4px;
+    }
+
+    .taskbar-item {
+      height: 26px;
+      padding: 0 10px;
+      background: var(--surface-hover);
+      box-shadow: var(--border-sunken-outer), var(--border-sunken-inner);
+      font-size: 11px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    .taskbar-tray {
+      height: 24px;
+      padding: 0 8px;
+      box-shadow: var(--border-sunken-outer), var(--border-sunken-inner);
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Desktop Area -->
+  <div id="desktop">
+    <!-- Desktop Shortcuts (NO games, clean labels) -->
+    <div class="desktop-shortcuts">
+      <div class="shortcut active" onclick="showPage('home')">
+        <svg viewBox="0 0 24 24" fill="#ffd700">
+          <path d="M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"/>
+        </svg>
+        <span>Portfolio</span>
+      </div>
+
+      <div class="shortcut" onclick="openResume()">
+        <svg viewBox="0 0 24 24" fill="#e53e3e">
+          <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+        </svg>
+        <span>Resume</span>
+      </div>
+
+      <div class="shortcut" onclick="window.open('https://github.com/Harshilll29', '_blank')">
+        <svg viewBox="0 0 24 24" fill="#ffffff">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+        </svg>
+        <span>GitHub</span>
+      </div>
+
+      <div class="shortcut" onclick="window.open('https://linkedin.com/in/harshil-joshi-', '_blank')">
+        <svg viewBox="0 0 24 24" fill="#0077b5">
+          <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
+        </svg>
+        <span>LinkedIn</span>
+      </div>
+    </div>
+
+    <!-- The One Window Container -->
+    <div id="window-container">
+      <!-- Title Bar -->
+      <div class="title-bar">
+        <div class="title-left">
+          <svg viewBox="0 0 24 24" fill="#ffffff">
+            <path d="M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"/>
+          </svg>
+          <span>Harshil Joshi - Portfolio</span>
+        </div>
+        <div class="title-buttons">
+          <button class="win-btn" title="Minimize" onclick="toggleWindow()">_</button>
+          <button class="win-btn" title="Maximize">□</button>
+          <button class="win-btn" title="Close" onclick="toggleWindow()">✕</button>
+        </div>
+      </div>
+
+      <!-- Window Content -->
+      <div class="window-content">
+        <!-- Vertical Navbar: Harshil Joshi in ONE single line -->
+        <div class="vertical-navbar">
+          <div class="navbar-header">
+            <h1>Harshil Joshi</h1>
+            <p class="navbar-subtitle">Full Stack Developer</p>
+          </div>
+          <div class="nav-links">
+            <div class="nav-link active" id="link-home" onclick="showPage('home')">HOME</div>
+            <div class="nav-link" id="link-about" onclick="showPage('about')">ABOUT</div>
+            <div class="nav-link" id="link-skills" onclick="showPage('skills')">SKILLS</div>
+            <div class="nav-link" id="link-experience" onclick="showPage('experience')">EXPERIENCE</div>
+            <div class="nav-link" id="link-projects" onclick="showPage('projects')">PROJECTS</div>
+            <div class="nav-link" id="link-contact" onclick="showPage('contact')">CONTACT</div>
+          </div>
+        </div>
+
+        <!-- Site Page Content Area -->
+        <div class="site-page-container">
+
+          <!-- PAGE 1: HOME (Rich, structured dashboard - NOT blank!) -->
+          <div class="page-section active" id="page-home">
+            <div class="home-hero">
+              <h1 style="font-size: 52px; margin-bottom: 8px;">Hi, I'm Harshil Joshi</h1>
+              <h2>Full Stack Developer</h2>
+              <p style="text-align: center; max-width: 620px; margin: 10px auto; font-size: 17px; color: #333;">
+                Specializing in responsive frontend architectures with <b>React.js & React Native</b>, paired with high-performance backend APIs using <b>Spring Boot & Node.js</b>.
+              </p>
+            </div>
+
+            <!-- Highlights Grid -->
+            <div class="home-grid">
+              <!-- Card 1: Featured Projects -->
+              <div class="home-card" onclick="showPage('projects')">
+                <div>
+                  <div class="home-card-header">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="#38a169"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                    <h3>Live Projects</h3>
+                  </div>
+                  <p>
+                    Explore live deployed platforms: <b>BlogSpace</b> (MERN), <b>Nexora</b> (Real-time video & chat), and <b>Salesman Tracking App</b> (GPS sales dashboard).
+                  </p>
+                </div>
+                <span style="font-size: 13px; font-weight: bold; color: #38a169;">Explore Projects ➔</span>
+              </div>
+
+              <!-- Card 2: Technical Skills -->
+              <div class="home-card" onclick="showPage('skills')">
+                <div>
+                  <div class="home-card-header">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="#dd6b20"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+                    <h3>Technical Skills</h3>
+                  </div>
+                  <p>
+                    Proficient across modern stacks: React.js, React Native, Java, Spring Boot, PostgreSQL, MongoDB, Docker, Git, and REST APIs.
+                  </p>
+                </div>
+                <span style="font-size: 13px; font-weight: bold; color: #dd6b20;">View All Skills ➔</span>
+              </div>
+            </div>
+
+            <!-- Quick Navigation Buttons -->
+            <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 14px; margin-bottom: 20px;">
+              <button class="site-button" onclick="showPage('about')">ABOUT ME</button>
+              <button class="site-button" onclick="showPage('skills')">SKILLS</button>
+              <button class="site-button" onclick="showPage('experience')">EXPERIENCE</button>
+              <button class="site-button" onclick="showPage('projects')">PROJECTS</button>
+              <button class="site-button primary" onclick="showPage('contact')">GET IN TOUCH</button>
+            </div>
+          </div>
+
+          <!-- PAGE 2: ABOUT (No Figure 1 text, picture cropped cleanly from bottom, no resume popup) -->
+          <div class="page-section" id="page-about">
+            <h1>Welcome</h1>
+            <h3>I'm Harshil Joshi</h3>
+            <br />
+            <p>
+              I'm a passionate software developer with experience in JavaScript, React, Node.js, and Express.js, and backend technologies like Java and Spring Boot. I'm a quick learner who collaborates closely with teams to build efficient, scalable, and user-friendly solutions to real-world problems.
+            </p>
+            <br />
+            <p>
+              Thank you for taking the time to check out my portfolio. I really hope you enjoy exploring it. If you have any questions or comments, feel free to contact me using the <a href="javascript:showPage('contact')">contact page</a> or shoot me an email directly at <a href="mailto:harshiljoshi525@gmail.com">harshiljoshi525@gmail.com</a>.
+            </p>
+            <br />
+
+            <h3>About Me</h3>
+            <br />
+            <p>
+              From building responsive user interfaces to engineering robust backend REST APIs and services, I focus on clean code, performance, and great user experiences. Currently, I'm contributing to production systems at Emgage across multiple portals, working with React.js, React Native, Spring Boot, and PostgreSQL.
+            </p>
+            <br />
+            
+            <!-- Picture: Clean frame, NO "Figure 1" text, decreased from bottom -->
+            <div class="captioned-image-container">
+              <div class="captioned-image">
+                <img src="../images/harshil.jpg" alt="Harshil Joshi" />
+              </div>
+            </div>
+
+            <h3>My Hobbies & Interests</h3>
+            <br />
+            <p>
+              Beyond coding, I enjoy engaging in competitive problem-solving and reasoning challenges. I also love playing cricket with friends and collaborating on innovative side projects.
+            </p>
+            <br />
+            <p>
+              Feel free to explore my <a href="javascript:showPage('skills')">skills</a>, <a href="javascript:showPage('experience')">experience</a>, and <a href="javascript:showPage('projects')">projects</a>, or drop me a line on the <a href="javascript:showPage('contact')">contact page</a>.
+            </p>
+          </div>
+
+          <!-- PAGE 3: SKILLS (Dedicated Section!) -->
+          <div class="page-section" id="page-skills">
+            <h1>Technical Skills</h1>
+            <h3>My Development Stack & Tools</h3>
+            <br />
+            <p>
+              A comprehensive breakdown of the programming languages, frontend libraries, backend frameworks, and development tools I work with:
+            </p>
+
+            <div class="skills-grid">
+              <!-- Frontend -->
+              <div class="skill-card">
+                <h3>Frontend Development</h3>
+                <div class="skill-list">
+                  <span class="tag-badge primary">React.js</span>
+                  <span class="tag-badge primary">React Native</span>
+                  <span class="tag-badge primary">TypeScript</span>
+                  <span class="tag-badge primary">JavaScript (ES6+)</span>
+                  <span class="tag-badge">Tailwind CSS</span>
+                  <span class="tag-badge">HTML5</span>
+                  <span class="tag-badge">CSS3</span>
+                  <span class="tag-badge">Zustand</span>
+                  <span class="tag-badge">TanStack Query</span>
+                </div>
+              </div>
+
+              <!-- Backend -->
+              <div class="skill-card">
+                <h3>Backend & APIs</h3>
+                <div class="skill-list">
+                  <span class="tag-badge primary">Spring Boot (Java)</span>
+                  <span class="tag-badge primary">Node.js</span>
+                  <span class="tag-badge primary">Express.js</span>
+                  <span class="tag-badge">RESTful APIs</span>
+                  <span class="tag-badge">Stream API</span>
+                  <span class="tag-badge">JWT Authentication</span>
+                  <span class="tag-badge">OAuth 2.0</span>
+                </div>
+              </div>
+
+              <!-- Databases -->
+              <div class="skill-card">
+                <h3>Databases</h3>
+                <div class="skill-list">
+                  <span class="tag-badge primary">MongoDB</span>
+                  <span class="tag-badge primary">PostgreSQL</span>
+                  <span class="tag-badge primary">MySQL</span>
+                </div>
+              </div>
+
+              <!-- DevOps & Tools -->
+              <div class="skill-card">
+                <h3>Tools & Platforms</h3>
+                <div class="skill-list">
+                  <span class="tag-badge">Git</span>
+                  <span class="tag-badge">GitHub</span>
+                  <span class="tag-badge">Docker</span>
+                  <span class="tag-badge">Jenkins CI/CD</span>
+                  <span class="tag-badge">Postman</span>
+                  <span class="tag-badge">Vercel</span>
+                  <span class="tag-badge">Netlify</span>
+                </div>
+              </div>
+
+              <!-- Core Strengths -->
+              <div class="skill-card" style="grid-column: 1 / -1;">
+                <h3>Core Strengths & Practices</h3>
+                <div class="skill-list">
+                  <span class="tag-badge primary">Component-Driven Architecture</span>
+                  <span class="tag-badge primary">Full Software Development Lifecycle (SDLC)</span>
+                  <span class="tag-badge primary">State Management</span>
+                  <span class="tag-badge">Automated CI/CD Workflows</span>
+                  <span class="tag-badge">Team Problem-Solving</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PAGE 4: EXPERIENCE (No resume popup) -->
+          <div class="page-section" id="page-experience">
+            <h1>Experience</h1>
+            <h3>Professional Journey</h3>
+            <br />
+
+            <!-- Experience 1: Emgage -->
+            <div class="exp-item">
+              <div class="exp-header">
+                <div class="exp-row-top">
+                  <h1>Emgage</h1>
+                  <h4>Full Stack Developer Intern</h4>
+                </div>
+                <div class="exp-row-bottom">
+                  <h3>React.js | Java (Spring Boot)</h3>
+                  <b><p>Dec 2025 – June 2026</p></b>
+                </div>
+              </div>
+              <p>
+                Contributed to 3 production enterprise platforms — an Onboarding Portal, Service Portal, and HRMS ESS Portal — handling both frontend and backend development across the software lifecycle.
+              </p>
+              <ul class="exp-bullets">
+                <li><p>Built responsive pages, components, and client features using <b>React.js (TypeScript)</b> and <b>React Native</b>.</p></li>
+                <li><p>Developed backend REST APIs using <b>Spring Boot (Java)</b> with <b>PostgreSQL</b> database.</p></li>
+                <li><p>Managed automated build and deployment pipelines via <b>Jenkins CI/CD</b>.</p></li>
+                <li><p>Developed a standalone Windows executable (.exe) application for automated biometric device configuration, cutting manual setup effort.</p></li>
+              </ul>
+            </div>
+
+            <!-- Experience 2: BrainyBeam -->
+            <div class="exp-item">
+              <div class="exp-header">
+                <div class="exp-row-top">
+                  <h1>BrainyBeam Technologies Pvt. Ltd.</h1>
+                  <h4>React.js Development Intern</h4>
+                </div>
+                <div class="exp-row-bottom">
+                  <h3>React.js Frontend</h3>
+                  <b><p>May 2025</p></b>
+                </div>
+              </div>
+              <p>
+                Developed and implemented key React.js functionalities during an intensive internship, including React Hooks for state management, component state handling, and routing implementation for single-page application navigation. Gained practical experience with modern React development patterns and frontend architecture.
+              </p>
+            </div>
+
+            <!-- Experience 3: Oasis Infobyte -->
+            <div class="exp-item">
+              <div class="exp-header">
+                <div class="exp-row-top">
+                  <h1>Oasis Infobyte</h1>
+                  <h4>Java Development Intern</h4>
+                </div>
+                <div class="exp-row-bottom">
+                  <h3>Java Development</h3>
+                  <b><p>June 2023 – July 2023</p></b>
+                </div>
+              </div>
+              <p>
+                Developed an ATM interface system and interactive number guessing game during a one-month Java development internship. Gained hands-on experience with object-oriented programming principles, user input handling, and Java core libraries while implementing functional software solutions.
+              </p>
+            </div>
+          </div>
+
+          <!-- PAGE 5: PROJECTS (With LIVE URL redirect & Salesman Tracking added!) -->
+          <div class="page-section" id="page-projects">
+            <h1>Projects</h1>
+            <h3>Featured Software Work</h3>
+            <br />
+            <p>
+              Click any project to visit its <b>Live Demo</b>, or access the source code on GitHub:
+            </p>
+            <br />
+
+            <!-- Project 1: Blog Space (Click opens Live URL) -->
+            <div class="project-card" onclick="window.open('https://blogsspace.netlify.app/', '_blank')">
+              <div class="project-card-header">
+                <h2>Blog Space</h2>
+                <div class="project-actions" onclick="event.stopPropagation()">
+                  <a href="https://blogsspace.netlify.app/" target="_blank" class="site-button primary">
+                    Live Demo ↗
+                  </a>
+                  <a href="https://github.com/Harshilll29/BlogSpace" target="_blank" class="site-button">
+                    GitHub ↗
+                  </a>
+                </div>
+              </div>
+              <img src="../images/blog.png" alt="Blog Space Screenshot" class="project-card-image" />
+              <p>
+                Built a comprehensive blogging website using MERN stack with secure JWT and Google OAuth authentication. Built a feature-rich blog editor with draft/publish functionality, commenting system, trending sections, and category filtering. Implemented responsive UI with React and Tailwind CSS, including user dashboard, pagination, and email OTP for password recovery. Utilized MongoDB for complete data storage and management.
+              </p>
+              <div class="tag-row">
+                <span class="tag-badge primary">Live Demo</span>
+                <span class="tag-badge">React.js</span>
+                <span class="tag-badge">Node.js</span>
+                <span class="tag-badge">Express.js</span>
+                <span class="tag-badge">MongoDB</span>
+                <span class="tag-badge">Tailwind CSS</span>
+                <span class="tag-badge">JWT</span>
+                <span class="tag-badge">Google OAuth</span>
+              </div>
+            </div>
+
+            <!-- Project 2: Nexora (Click opens Live URL) -->
+            <div class="project-card" onclick="window.open('https://nexora-1.vercel.app/', '_blank')">
+              <div class="project-card-header">
+                <h2>Nexora</h2>
+                <div class="project-actions" onclick="event.stopPropagation()">
+                  <a href="https://nexora-1.vercel.app/" target="_blank" class="site-button primary">
+                    Live Demo ↗
+                  </a>
+                  <a href="https://github.com/Harshilll29/Nexora" target="_blank" class="site-button">
+                    GitHub ↗
+                  </a>
+                </div>
+              </div>
+              <img src="../images/nexora.png" alt="Nexora Screenshot" class="project-card-image" />
+              <p>
+                Built a MERN stack language exchange platform where users connect with native speakers for interactive language learning. Leveraged Stream API for real-time messaging and video calls, enabling authentic language practice sessions. Built with secure authentication, Zustand for state management, and TanStack Query for data fetching, delivering a smooth and responsive user experience.
+              </p>
+              <div class="tag-row">
+                <span class="tag-badge primary">Live Demo</span>
+                <span class="tag-badge">React.js</span>
+                <span class="tag-badge">Stream API</span>
+                <span class="tag-badge">Zustand</span>
+                <span class="tag-badge">TanStack Query</span>
+                <span class="tag-badge">Node.js</span>
+                <span class="tag-badge">MongoDB</span>
+                <span class="tag-badge">Tailwind CSS</span>
+              </div>
+            </div>
+
+            <!-- Project 3: Salesman Tracking App (Click opens Live URL) -->
+            <div class="project-card" onclick="window.open('https://salesman-tracking.vercel.app', '_blank')">
+              <div class="project-card-header">
+                <h2>Salesman Tracking App</h2>
+                <div class="project-actions" onclick="event.stopPropagation()">
+                  <a href="https://salesman-tracking.vercel.app" target="_blank" class="site-button primary">
+                    Live Demo ↗
+                  </a>
+                  <a href="https://github.com/Harshilll29/Salesman_Tracking" target="_blank" class="site-button">
+                    GitHub ↗
+                  </a>
+                </div>
+              </div>
+              <img src="../images/salesman.png" alt="Salesman Tracking App Screenshot" class="project-card-image" />
+              <p>
+                A modern, high-performance React application for real-time monitoring and management of sales teams' field activities. Features interactive GPS tracking on maps to optimize territory coverage, an executive performance dashboard (tracking visits, conversions, sales volume), role-based secure authentication, and on-field activity logging built with a mobile-first responsive Tailwind CSS interface.
+              </p>
+              <div class="tag-row">
+                <span class="tag-badge primary">Live Demo</span>
+                <span class="tag-badge">React.js</span>
+                <span class="tag-badge">Tailwind CSS</span>
+                <span class="tag-badge">GPS & Maps</span>
+                <span class="tag-badge">Activity Dashboard</span>
+                <span class="tag-badge">Role-Based Auth</span>
+                <span class="tag-badge">Mobile First</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- PAGE 6: CONTACT (Includes the Resume Download Card!) -->
+          <div class="page-section" id="page-contact">
+            <h1>Contact</h1>
+            <h3>Get in Touch</h3>
+            <br />
+            <p>
+              If you have any questions, inquiries, or would like to discuss a project or opportunity, please reach out:
+            </p>
+
+            <!-- Dedicated Resume Card inside Contact -->
+            <div class="resume-contact-card">
+              <div style="display: flex; align-items: center; gap: 14px;">
+                <svg viewBox="0 0 24 24" width="32" height="32" fill="#000080"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                <div>
+                  <h3 style="margin: 0; font-size: 19px; color: #000080;">Harshil Joshi — Resume</h3>
+                  <p style="margin: 3px 0 0 0; font-size: 14px; color: #555;">Full Stack Developer (React.js, React Native, Java, Spring Boot)</p>
+                </div>
+              </div>
+              <button class="site-button primary" onclick="openResume()">
+                View / Download Resume
+              </button>
+            </div>
+
+            <!-- Social Links -->
+            <div class="social-row">
+              <a href="https://github.com/Harshilll29" target="_blank" class="social-box">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                <span>GitHub</span>
+              </a>
+              <a href="https://linkedin.com/in/harshil-joshi-" target="_blank" class="social-box">
+                <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+                <span>LinkedIn</span>
+              </a>
+              <a href="https://mail.google.com/mail/?view=cm&fs=1&to=harshiljoshi525@gmail.com" target="_blank" class="social-box" title="Open Gmail in browser">
+                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                <span>Gmail</span>
+              </a>
+            </div>
+
+            <!-- Contact Message Form -->
+            <div class="contact-form">
+              <div class="form-group">
+                <label>Name</label>
+                <input type="text" id="form-name" placeholder="Your Name" />
+              </div>
+              <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="form-email" placeholder="Your Email" />
+              </div>
+              <div class="form-group">
+                <label>Message</label>
+                <textarea id="form-message" placeholder="Type your message here..."></textarea>
+              </div>
+              <button class="site-button primary" id="send-btn" onclick="handleSendEmail()">Send Message</button>
+              <span id="send-status" style="margin-left: 12px; font-size: 14px; color: #000080;"></span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Taskbar -->
+  <div id="taskbar">
+    <button id="start-btn" onclick="showPage('home')">
+      <svg viewBox="0 0 24 24" fill="#000080">
+        <path d="M4 4h7v7H4zm9 0h7v7h-7zm-9 9h7v7H4zm9 0h7v7h-7z"/>
+      </svg>
+      <span>Start</span>
+    </button>
+
+    <div class="taskbar-items">
+      <div class="taskbar-item" onclick="toggleWindow()">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="#000080">
+          <path d="M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"/>
+        </svg>
+        <span>Harshil Joshi - Portfolio</span>
+      </div>
+    </div>
+
+    <div class="taskbar-tray">
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="#333">
+        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+      </svg>
+      <span id="clock">12:00 PM</span>
+    </div>
+  </div>
+
+  <script>
+    // Page navigation
+    function showPage(pageId) {
+      document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+
+      const targetPage = document.getElementById('page-' + pageId);
+      const targetLink = document.getElementById('link-' + pageId);
+      if (targetPage) targetPage.classList.add('active');
+      if (targetLink) targetLink.classList.add('active');
+
+      const win = document.getElementById('window-container');
+      if (win.style.display === 'none') {
+        win.style.display = 'flex';
+      }
+    }
+
+    // Open resume directly
+    function openResume() {
+      window.open('../Harshil_Joshi_Resume.pdf', '_blank');
+    }
+
+    // Toggle window minimize/restore
+    function toggleWindow() {
+      const win = document.getElementById('window-container');
+      win.style.display = win.style.display === 'none' ? 'flex' : 'none';
+    }
+
+    // Direct in-page message sender (Never opens external apps or mail clients)
+    async function handleSendEmail() {
+      const name = document.getElementById('form-name').value.trim();
+      const email = document.getElementById('form-email').value.trim();
+      const message = document.getElementById('form-message').value.trim();
+      const status = document.getElementById('send-status');
+      const btn = document.getElementById('send-btn');
+
+      if (!name || !message) {
+        status.style.color = '#c62828';
+        status.innerText = 'Please enter your name and message.';
+        return;
+      }
+
+      status.style.color = '#000080';
+      status.innerText = 'Sending message directly...';
+      if (btn) btn.disabled = true;
+
+      try {
+        const response = await fetch('https://formsubmit.co/ajax/harshiljoshi525@gmail.com', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            name: name,
+            email: email || 'No email provided',
+            message: message,
+            _subject: `New Portfolio Message from ${name}`
+          })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success !== 'false') {
+          status.style.color = '#2e7d32';
+          status.innerText = '✓ Message sent directly! Thank you.';
+          document.getElementById('form-name').value = '';
+          document.getElementById('form-email').value = '';
+          document.getElementById('form-message').value = '';
+        } else if (data.message && data.message.includes('Activation')) {
+          status.style.color = '#2e7d32';
+          status.innerText = '✓ Activation email sent to your inbox. Click "Activate Form" once to complete setup!';
+        } else {
+          status.style.color = '#2e7d32';
+          status.innerText = '✓ Message submitted successfully!';
+          document.getElementById('form-name').value = '';
+          document.getElementById('form-email').value = '';
+          document.getElementById('form-message').value = '';
+        }
+      } catch (err) {
+        console.error('Send error:', err);
+        status.style.color = '#c62828';
+        status.innerText = 'Unable to send message right now. Please try again.';
+      } finally {
+        if (btn) btn.disabled = false;
+      }
+    }
+
+    // Taskbar clock
+    function updateClock() {
+      const now = new Date();
+      let hours = now.getHours();
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12 || 12;
+      document.getElementById('clock').innerText = hours + ':' + minutes + ' ' + ampm;
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    // Relay mouse & key events to 3D scene
+    window.onload = () => {
+      window.addEventListener('mousemove', (e) => {
+        window.parent.postMessage({
+          clientX: e.clientX,
+          clientY: e.clientY,
+          type: 'mousemove'
+        }, '*');
+      });
+
+      window.addEventListener('mousedown', (e) => {
+        window.parent.postMessage({ type: 'mousedown' }, '*');
+      });
+
+      window.addEventListener('mouseup', (e) => {
+        window.parent.postMessage({ type: 'mouseup' }, '*');
+      });
+
+      window.addEventListener('keydown', (e) => {
+        if (!e.key) return;
+        window.parent.postMessage({ type: 'keydown', key: e.key }, '*');
+      });
+
+      window.addEventListener('keyup', (e) => {
+        if (!e.key) return;
+        window.parent.postMessage({ type: 'keyup', key: e.key }, '*');
+      });
+    };
+  </script>
+</body>
+</html>
